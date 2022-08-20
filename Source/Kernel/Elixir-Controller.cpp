@@ -179,7 +179,7 @@ namespace Elixir::Controller
 
         #ifdef _PRO_VERSION
             s_Database.clear();
-            /*
+
             GetStateListData(* (uint32_t *) (FirstTeamStatePtr  + 0x0C), [&](uint32_t ElementFighterState)
             {
                 GetStateListData(* (uint32_t *) (ElementFighterState + 0x2C), [&](uint32_t CardState)
@@ -219,63 +219,56 @@ namespace Elixir::Controller
                     s_Database.emplace(* (uint32_t *) (CardState + 0x0C), Data);
                 });
             });
-            */
 
             s_Secret_Cards_1.clear();
             s_Secret_Cards_2.clear();
 
             GetStateListData(* (uint32_t *) (FirstTeamStatePtr  + 0x10), [&](uint32_t ID)
             {
-                //    uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 0);
+                uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 0);
 
                 Card State;
                 State.ID   = ID;
-             //   State.Name = GetDisplay(GetString(Name), 0, 0);
+                State.Name = GetDisplay(GetString(Name), 0, 0);
 
                 s_Secret_Cards_1.push_back(State);
             });
-            Trace(L"SECRET P1. %d", s_Secret_Cards_1.size());
 
             GetStateListData(* (uint32_t *) (SecondTeamStatePtr + 0x10), [&](uint32_t ID)
             {
-                // uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 1);
+                uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 1);
 
                 Card State;
                 State.ID   = ID;
-           //     State.Name = GetDisplay(GetString(Name), 0, 1);
+                State.Name = GetDisplay(GetString(Name), 0, 1);
 
                 s_Secret_Cards_2.push_back(State);
             });
-            Trace(L"SECRET P2. %d", s_Secret_Cards_2.size());
 
             s_Discard_Cards_1.clear();
             s_Discard_Cards_2.clear();
 
             GetStateListData(* (uint32_t *) (FirstTeamStatePtr  + 0x18), [&](uint32_t ID)
             {
-                //  uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 0);
+                uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 0);
 
                 Card State;
                 State.ID   = ID;
-              //  State.Name = GetDisplay(GetString(Name), 0, 0);
+                State.Name = GetDisplay(GetString(Name), 0, 0);
 
                 s_Discard_Cards_1.push_back(State);
             });
-            Trace(L"DISCARD P1. %d", s_Secret_Cards_1.size());
-
 
             GetStateListData(* (uint32_t *) (SecondTeamStatePtr + 0x18), [&](uint32_t ID)
             {
-                //    uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 1);
+                uint32_t Name = GetName(BaseBattleDataProcessorPtr, s_Database[ID].Card, 1);
 
                 Card State;
                 State.ID   = ID;
-               // State.Name = GetDisplay(GetString(Name), 0, 1);
+                State.Name = GetDisplay(GetString(Name), 0, 1);
 
                 s_Discard_Cards_2.push_back(State);
             });
-            Trace(L"DISCARD P2. %d", s_Secret_Cards_2.size());
-
 
             Dirty.Secret_1 = true;
             Dirty.Secret_2 = true;
@@ -330,7 +323,7 @@ namespace Elixir::Controller
         {
             s_Active_Cards_2 = Active_Cards_2;
         }
-/*
+
         if (Dirty.Secret_1 || Dirty.Active_1)
         {
             std::unordered_map<uint32_t, uint32_t> Counter;
@@ -407,7 +400,7 @@ namespace Elixir::Controller
                     s_Hand_Cards_2.emplace_back(State);
                 }
             }
-        }*/
+        }
     #endif // _PRO_VERSION
 
         return Dirty;
